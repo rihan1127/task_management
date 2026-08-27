@@ -19,15 +19,16 @@ const ROLE_META = {
 };
 
 // ── Mini progress ring ────────────────────────────────────────────────────────
-function ProgressRing({ pct, size = 56, stroke = 5, color = '#6366f1' }) {
-  const r = (size - stroke) / 2;
+function ProgressRing({ pct = 0, size = 56, stroke = 5, color = '#6366f1' }) {
+  const safePct = !Number.isFinite(Number(pct)) ? 0 : Math.min(Math.max(Number(pct), 0), 100);
+  const r = Math.max((size - stroke) / 2, 1);
   const circ = 2 * Math.PI * r;
-  const offset = circ - (pct / 100) * circ;
+  const offset = Number.isFinite(circ) ? circ - (safePct / 100) * circ : 0;
   return (
     <svg width={size} height={size} className="-rotate-90">
       <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="currentColor" strokeWidth={stroke} className="text-gray-200" />
       <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={color} strokeWidth={stroke}
-        strokeDasharray={circ} strokeDashoffset={offset} strokeLinecap="round" style={{ transition: 'stroke-dashoffset 1s ease' }} />
+        strokeDasharray={circ} strokeDashoffset={Number.isFinite(offset) ? offset : 0} strokeLinecap="round" style={{ transition: 'stroke-dashoffset 1s ease' }} />
     </svg>
   );
 }
@@ -107,7 +108,7 @@ export default function Dashboard() {
   const me = stats?.current_user || {};
   const priorityMax = Math.max(...Object.values(priorityDist), 1);
   const roleMeta = ROLE_META[role] || ROLE_META.developer;
-  const completionRate = tasks.completion_rate ?? 0;
+  const completionRate = Number.isFinite(Number(tasks.completion_rate)) ? Number(tasks.completion_rate) : 0;
 
   return (
     <div className="space-y-6">

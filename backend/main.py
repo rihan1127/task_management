@@ -13,6 +13,7 @@ from typing import Callable
 
 from database.connection import init_db, get_db
 from routes import tasks, users, dashboard, comments, external
+from routes import groq_ai as groq_ai_routes
 from routes import auth as auth_routes
 from routes import activity as activity_routes
 from routes import ws as ws_routes
@@ -113,6 +114,12 @@ app.include_router(
     ws_routes.router,
     prefix="/ws",
     tags=["WebSocket"]
+)
+
+app.include_router(
+    groq_ai_routes.router,
+    prefix="/api/ai",
+    tags=["Groq AI"]
 )
 
 # ========================

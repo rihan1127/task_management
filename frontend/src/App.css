@@ -2,49 +2,51 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── CSS custom properties (light theme) ── */
+/* ── CSS custom properties (Sky Blue & White light theme) ── */
 :root {
-  --bg-app:        #f3f4f6;
-  --bg-surface:    #ffffff;
-  --bg-sidebar:    #111827;
-  --bg-header:     #ffffff;
-  --bg-muted:      #f9fafb;
-  --bg-hover:      #f0f9ff;
-  --border:        #e5e7eb;
-  --border-subtle: #f3f4f6;
-  --text-primary:  #111827;
-  --text-secondary:#6b7280;
-  --text-muted:    #9ca3af;
+  --bg-app:        #f0f9ff; /* Soft sky-tinted white */
+  --bg-surface:    #ffffff; /* Pure crisp white */
+  --bg-sidebar:    #0c4a6e; /* Deep ocean sky blue */
+  --bg-header:     #ffffff; /* Crisp white header */
+  --bg-muted:      #f8fafc;
+  --bg-hover:      #e0f2fe; /* Light sky blue hover */
+  --border:        #e0f2fe; /* Subtle sky blue border */
+  --border-subtle: #f0f9ff;
+  --text-primary:  #0c4a6e; /* Deep sky slate */
+  --text-secondary:#475569;
+  --text-muted:    #94a3b8;
   --text-inverse:  #ffffff;
-  --ring:          #3b82f6;
-  --shadow:        0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  --shadow-lg:     0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --ring:          #0284c7; /* Sky 600 */
+  --shadow:        0 1px 3px 0 rgb(2 132 199 / 0.08), 0 1px 2px -1px rgb(2 132 199 / 0.08);
+  --shadow-lg:     0 10px 15px -3px rgb(2 132 199 / 0.1), 0 4px 6px -4px rgb(2 132 199 / 0.1);
   --radius:        0.75rem;
-  --sidebar-text:  #9ca3af;
-  --sidebar-hover: #1f2937;
-  --sidebar-active:#2563eb;
+  --sidebar-text:  #bae6fd; /* Light sky blue text */
+  --sidebar-hover: rgba(255, 255, 255, 0.08);
+  --sidebar-active:#0284c7; /* Vibrant Sky 600 */
+  --accent-sky:    #0284c7;
+  --accent-sky-light:#38bdf8;
 }
 
 /* ── Dark theme ── */
 [data-theme="dark"] {
-  --bg-app:        #0f172a;
-  --bg-surface:    #1e293b;
-  --bg-sidebar:    #0d1117;
-  --bg-header:     #1e293b;
-  --bg-muted:      #162032;
-  --bg-hover:      #1e3a5f;
-  --border:        #334155;
-  --border-subtle: #1e293b;
-  --text-primary:  #f1f5f9;
-  --text-secondary:#94a3b8;
-  --text-muted:    #64748b;
-  --text-inverse:  #0f172a;
-  --ring:          #60a5fa;
+  --bg-app:        #082f49;
+  --bg-surface:    #0c4a6e;
+  --bg-sidebar:    #031d30;
+  --bg-header:     #0c4a6e;
+  --bg-muted:      #073b5c;
+  --bg-hover:      #0e5884;
+  --border:        #164e63;
+  --border-subtle: #0c4a6e;
+  --text-primary:  #f0f9ff;
+  --text-secondary:#bae6fd;
+  --text-muted:    #7dd3fc;
+  --text-inverse:  #082f49;
+  --ring:          #38bdf8;
   --shadow:        0 1px 3px 0 rgb(0 0 0 / 0.4);
   --shadow-lg:     0 10px 15px -3px rgb(0 0 0 / 0.5);
-  --sidebar-text:  #64748b;
-  --sidebar-hover: #1f2937;
-  --sidebar-active:#2563eb;
+  --sidebar-text:  #7dd3fc;
+  --sidebar-hover: rgba(56, 189, 248, 0.12);
+  --sidebar-active:#0284c7;
 }
 
 * { @apply box-border; }

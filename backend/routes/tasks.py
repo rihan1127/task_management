@@ -172,12 +172,6 @@ async def update_task(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail="Analysts have read-only access and cannot update tasks"
             )
-        if current_user.role == "developer":
-            if task.assigned_to != current_user.id:
-                raise HTTPException(
-                    status_code=status.HTTP_403_FORBIDDEN,
-                    detail="Developers can only update tasks assigned to them"
-                )
 
         result = TaskService.update_task(db, task_id, update_data)
         return {

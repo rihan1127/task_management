@@ -138,28 +138,30 @@ function AppLayout() {
 
   return (
     <div className="flex h-screen" style={{ background: 'var(--bg-app)' }}>
-      {/* ── Jira Sidebar ── */}
+      {/* ── Jira / TaskHub Sky Blue Sidebar ── */}
       <aside
         className={`${sidebarOpen ? 'w-64' : 'w-[72px]'} transition-all duration-300 flex flex-col flex-shrink-0`}
-        style={{ background: 'var(--bg-sidebar)' }}
+        style={{
+          background: 'linear-gradient(180deg, #0284c7 0%, #0369a1 60%, #075985 100%)',
+          boxShadow: '4px 0 24px rgba(2, 132, 199, 0.15)',
+        }}
       >
         {/* Project Header */}
-        <div className="px-4 py-5 flex items-center justify-between" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+        <div className="px-4 py-5 flex items-center justify-between" style={{ borderBottom: '1px solid rgba(255,255,255,0.12)' }}>
           {sidebarOpen && (
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-black text-sm shadow-sm">
+              <div className="w-8 h-8 rounded-xl bg-white text-sky-700 flex items-center justify-center font-black text-sm shadow-md shadow-sky-950/20">
                 J
               </div>
               <div className="min-w-0">
-                <span className="font-bold text-sm tracking-tight text-white block truncate">TaskHub Software</span>
-                <span className="text-[10px] text-gray-400 block tracking-wider uppercase font-semibold">Scrum Project</span>
+                <span className="font-extrabold text-sm tracking-tight text-white block truncate">TaskHub Agile</span>
+                <span className="text-[10px] text-sky-200 block tracking-wider uppercase font-bold">Scrum Workspace</span>
               </div>
             </div>
           )}
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="p-2 rounded-lg transition-colors"
-            style={{ color: 'var(--sidebar-text)' }}
+            className="p-2 rounded-xl transition-all text-sky-100 hover:text-white hover:bg-white/10"
             title={sidebarOpen ? 'Collapse' : 'Expand'}
           >
             <Icons.Menu />
@@ -167,9 +169,9 @@ function AppLayout() {
         </div>
 
         {/* Planning Navigation */}
-        <div className="flex-1 py-4 px-3 space-y-1 overflow-y-auto">
+        <div className="flex-1 py-4 px-3 space-y-1.5 overflow-y-auto">
           {sidebarOpen && (
-            <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-gray-400">
+            <div className="px-3 py-1 text-[10px] font-extrabold uppercase tracking-widest text-sky-200/70">
               Planning & Work
             </div>
           )}
@@ -179,15 +181,15 @@ function AppLayout() {
         </div>
 
         {/* User + Logout */}
-        <div className="px-3 py-4" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+        <div className="px-3 py-4" style={{ borderTop: '1px solid rgba(255,255,255,0.12)' }}>
           <div className={`flex items-center gap-3 ${sidebarOpen ? '' : 'justify-center'}`}>
-            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
-              {user?.name?.[0] || 'U'}
+            <div className="w-9 h-9 rounded-full bg-white text-sky-700 flex items-center justify-center font-black text-sm flex-shrink-0 shadow-md shadow-sky-950/20">
+              {user?.name?.[0]?.toUpperCase() || 'U'}
             </div>
             {sidebarOpen && (
               <>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-white truncate">{user?.name || 'User'}</p>
+                  <p className="text-sm font-bold text-white truncate">{user?.name || 'User'}</p>
                   <div className="mt-0.5">
                     <RoleBadge role={user?.role} />
                   </div>
@@ -195,8 +197,7 @@ function AppLayout() {
                 <button
                   onClick={logout}
                   title="Sign out"
-                  className="p-1.5 rounded-lg transition-colors flex-shrink-0"
-                  style={{ color: 'var(--sidebar-text)' }}
+                  className="p-1.5 rounded-lg text-sky-200 hover:text-white hover:bg-white/10 transition-colors flex-shrink-0"
                 >
                   <Icons.Logout />
                 </button>
@@ -208,7 +209,7 @@ function AppLayout() {
 
       {/* ── Main Workspace ── */}
       <main className="flex-1 flex flex-col overflow-hidden min-w-0">
-        {/* Jira Top Bar */}
+        {/* Sky Blue & White Top Bar */}
         <header className="px-6 py-3 flex-shrink-0 flex items-center justify-between gap-4"
           style={{ background: 'var(--bg-header)', borderBottom: '1px solid var(--border)', boxShadow: 'var(--shadow)' }}>
           <div className="flex items-center gap-4 flex-1 max-w-xl">
@@ -217,7 +218,7 @@ function AppLayout() {
               <button
                 id="jira-global-create-btn"
                 onClick={() => setCreateModalOpen(true)}
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-sm transition-all flex-shrink-0"
+                className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-extrabold text-xs shadow-md shadow-sky-600/30 transition-all flex-shrink-0"
               >
                 <span className="text-sm font-black">+</span> Create
               </button>
@@ -225,7 +226,7 @@ function AppLayout() {
 
             {/* Global Search */}
             <div className="relative w-full">
-              <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none" style={{ color: 'var(--text-muted)' }}>
+              <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-sky-400">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
@@ -233,10 +234,9 @@ function AppLayout() {
               <input
                 type="search"
                 placeholder="Search issues, keys (PROJ-1)..."
-                className="pl-9 pr-4 py-1.5 rounded-lg w-full text-xs outline-none transition-all"
+                className="pl-9 pr-4 py-1.5 rounded-xl w-full text-xs outline-none transition-all border border-sky-100 focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
                 style={{
                   background: 'var(--bg-muted)',
-                  border: '1px solid var(--border)',
                   color: 'var(--text-primary)',
                 }}
               />
@@ -298,7 +298,7 @@ function App() {
   return (
     <ThemeProvider>
       <NotificationProvider>
-        <Router>
+        <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <AuthProvider>
             <Routes>
               <Route path="/login" element={<Login />} />
@@ -318,25 +318,35 @@ function App() {
 
 function NavLink({ to, icon, label, open, exact = false }) {
   const location = useLocation();
+  const currentPath = location.pathname;
+
+  // Precise single-tab matching logic
   const isActive = exact
-    ? location.pathname === to
-    : location.pathname === to || (to !== '/' && location.pathname.startsWith(to));
+    ? currentPath === to
+    : currentPath === to || (to !== '/' && currentPath.startsWith(to + '/'));
 
   return (
     <Link
       to={to}
       title={!open ? label : undefined}
-      className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-150 text-sm font-medium ${
-        isActive ? 'bg-blue-600 text-white shadow-sm' : 'hover:text-white'
+      className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition-all duration-200 text-sm font-semibold relative ${
+        isActive
+          ? 'bg-white text-sky-700 shadow-md shadow-sky-950/20 font-bold'
+          : 'text-sky-100 hover:text-white hover:bg-white/10'
       }`}
-      style={!isActive ? { color: 'var(--sidebar-text)' } : {}}
-      onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = 'var(--sidebar-hover)'; }}
-      onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = ''; }}
     >
-      <span className="flex-shrink-0">{icon}</span>
-      {open && <span className="truncate">{label}</span>}
+      <span className={`flex-shrink-0 transition-transform ${isActive ? 'scale-110 text-sky-600' : ''}`}>
+        {icon}
+      </span>
+      {open && (
+        <span className="truncate flex-1">{label}</span>
+      )}
+      {isActive && open && (
+        <span className="w-2 h-2 rounded-full bg-sky-500 shadow-sm" />
+      )}
     </Link>
   );
 }
 
 export default App;
+

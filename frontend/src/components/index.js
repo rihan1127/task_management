@@ -17,3 +17,4 @@ export { PermissionGate, ProtectedPage } from './PermissionGate';
 export { StoryIcon, BugIcon, TaskIcon, EpicIcon, IssueTypeIcon, IssueTypeBadge, JiraPriorityIcon } from './JiraIcons';
 export { default as CreateIssueModal } from './CreateIssueModal';
 export { default as IssueDetailDrawer } from './IssueDetailDrawer';
+export { default as AIAnalysisPanel } from './AIAnalysisPanel';
