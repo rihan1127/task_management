@@ -17,10 +17,18 @@ export const Modal = ({
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'auto';
-      const timer = setTimeout(() => setShouldRender(false), 300);
+      const timer = setTimeout(() => setShouldRender(false), 250);
       return () => clearTimeout(timer);
     }
   }, [isOpen]);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && isOpen) onClose?.();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
 
   if (!shouldRender) return null;
 
@@ -34,27 +42,40 @@ export const Modal = ({
 
   return (
     <div
-      className={`fixed inset-0 bg-black z-50 transition-opacity duration-300 ${
-        isOpen ? 'opacity-50' : 'opacity-0'
-      }`}
-      onClick={onClose}
-    />
-  ) && (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4"
+      aria-modal="true"
+      role="dialog"
+    >
+      {/* Backdrop with heavy blur and dark overlay */}
       <div
-        className={`bg-white rounded-lg shadow-xl transform transition-all duration-300 w-full ${
-          sizeClasses[size]
-        } ${isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
-        onClick={e => e.stopPropagation()}
+        className={`fixed inset-0 bg-slate-900/60 backdrop-blur-md transition-opacity duration-300 ${
+          isOpen ? 'opacity-100' : 'opacity-0'
+        }`}
+        onClick={onClose}
+      />
+
+      {/* Modal Card */}
+      <div
+        className={`relative bg-white rounded-2xl shadow-2xl shadow-sky-950/20 border border-sky-100 transform transition-all duration-300 w-full z-10 overflow-hidden ${
+          sizeClasses[size] || 'max-w-md'
+        } ${isOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4'}`}
+        style={{ background: 'var(--bg-surface)', borderColor: 'var(--border)' }}
+        onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900">{title}</h2>
+        <div
+          className="flex items-center justify-between px-6 py-4 border-b border-sky-100"
+          style={{ borderColor: 'var(--border)' }}
+        >
+          <h2 className="text-lg font-black text-gray-900" style={{ color: 'var(--text-primary)' }}>
+            {title}
+          </h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-500 transition-colors"
+            className="text-gray-400 hover:text-gray-600 p-1.5 rounded-lg hover:bg-gray-100 transition-colors"
+            title="Close"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
@@ -67,7 +88,10 @@ export const Modal = ({
 
         {/* Footer */}
         {footer && (
-          <div className="flex items-center justify-end gap-3 p-6 border-t border-gray-200">
+          <div
+            className="flex items-center justify-end gap-3 px-6 py-4 border-t border-sky-100 bg-sky-50/50"
+            style={{ borderColor: 'var(--border)', background: 'var(--bg-muted)' }}
+          >
             {footer}
           </div>
         )}
