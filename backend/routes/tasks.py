@@ -86,10 +86,10 @@ async def list_tasks(
 async def create_task(
     task_data: TaskCreate,
     db: Session = Depends(get_db),
-    current_user: User = Depends(require_roles("admin", "manager"))
+    current_user: User = Depends(require_roles("admin", "manager", "developer", "analyst"))
 ):
     """
-    Create a new task (admin & manager only)
+    Create a new task
     
     - **title**: Task title (required)
     - **description**: Task description (optional)
@@ -154,9 +154,7 @@ async def update_task(
 ):
     """
     Update a task.
-    - Admin & Manager: Can update any field on any task.
-    - Developer: Can update tasks assigned to them (e.g. status, description).
-    - Analyst: Read-only, cannot update tasks.
+    Allows authenticated users to update task attributes, status transitions, and assignments.
     """
     try:
         task = TaskRepository.get_by_id(db, task_id)
@@ -164,13 +162,6 @@ async def update_task(
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail=f"Task {task_id} not found"
-            )
-
-        # RBAC Check
-        if current_user.role == "analyst":
-            raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
-                detail="Analysts have read-only access and cannot update tasks"
             )
 
         result = TaskService.update_task(db, task_id, update_data)
